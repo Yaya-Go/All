@@ -1,0 +1,26 @@
+<div class="add-transaction-item p-4">
+  <h2 class="text-center mb-4">Add new transaction item</h2>
+  <div class="form-content">
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="floatingName" placeholder="Name" formControlName="name">
+        <label for="floatingName">Name</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="number" min="0" max="5" step="0.5" class="form-control" id="floatingRates" placeholder="Rates" formControlName="rates">
+        <label for="floatingRates">Rates</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="number" class="form-control" formControlName="amount" id="floatingAmount" placeholder="Amount">
+        <label for="floatingAmount">Amount</label>
+      </div>
+      <div class="form-floating mb-3">
+        <textarea class="form-control" placeholder="Leave a comment here" id="floatingComments" formControlName="comments"></textarea>
+        <label for="floatingComments">Comments</label>
+      </div>
+      <div class="text-center">
+        <button class="btn btn-primary" type="submit">Sumbit</button>
+      </div>
+    </form>
+  </div>
+</div>

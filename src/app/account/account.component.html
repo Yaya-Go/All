@@ -1,0 +1,37 @@
+<div class="account mx-auto col-sm-12 col-md-8 col-lg-6">
+  <app-base [title]="title">
+    <ng-container>
+      <div class="table-content">
+        <form>
+          <app-custom-table
+            [headers]="headers"
+            (add)="add()"
+          >
+            <ng-container>
+              <tbody *ngIf="(list$ | async)">
+                <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
+                  <td class="align-middle">{{item.name}}</td>
+                  <td class="text-end">
+                    <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
+                      <i class="fa-regular fa-file-lines"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-warning non-outline" type="button" (click)="edit(item)">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="delete(item)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </ng-container>
+          </app-custom-table>
+          <div class="d-flex justify-content-between p-2" *ngIf="(list$ | async)?.length">
+            <ngb-pagination class="mx-auto" [collectionSize]="(list$ | async)?.length!" [(page)]="currentPage" [pageSize]="pagePerShow">
+            </ngb-pagination>
+          </div>
+        </form>
+      </div>
+    </ng-container>
+  </app-base>
+</div>

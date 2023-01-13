@@ -1,0 +1,75 @@
+<div class="detail">
+  <div class="container">
+    <div class="detail__back py-3 d-flex">
+      <a class="btn btn-sm btn-link non-decoration" [routerLink]="[backUrl]">
+        <i class="fa-solid fa-arrow-left me-1"></i>
+        Back
+      </a>
+    </div>
+    <div class="detail__content d-flex flex-column" *ngIf="itemDetail">
+      <div class="detail__content--left mb-3 card col-lg-6 col-sm-12 mx-auto">
+        <div class="card-header">
+          <h4 class="text-center d-flex mb-0">
+            <a class="btn btn-sm btn-link non-decoration" href="javascript:void(0);" (click)="prvMonth()">
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <span class="mx-auto">{{ currentYear }} {{ mapMonth() }} - {{ itemDetail.name }}</span>
+            <a class="btn btn-sm btn-link non-decoration" href="javascript:void(0);" (click)="nextMonth()">
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </h4>
+        </div>
+        <div class="summary-content card-body">
+          <table class="table">
+            <tbody>
+              <tr>
+                <td>Total Transactions</td>
+                <td class="align-middle text-primary text-end">{{ summary.length }}</td>
+              </tr>
+              <tr>
+                <td>Total Amount</td>
+                <td class="align-middle text-danger text-end">{{ summary.amount | currency:'$' }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="detail__content--right">
+        <div class="transactions">
+          <app-base [title]="title">
+            <ng-container>
+              <div class="table-content">
+                <form>
+                  <app-custom-table
+                    [headers]="headers"
+                    (add)="addTransaction()"
+                  >
+                    <ng-container>
+                      <tbody *ngIf="(list$ | async)">
+                        <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
+                          <td class="align-middle">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
+                          <td class="align-middle">{{item.name}}</td>
+                          <td class="align-middle">{{item.category.name}}</td>
+                          <td class="align-middle text-danger">{{item.amount|currency:'$'}}</td>
+                          <td class="text-end col-3">
+                            <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
+                              <i class="fa-regular fa-file-lines"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ng-container>
+                  </app-custom-table>
+                  <div class="d-flex justify-content-between p-2" *ngIf="(list$ | async)?.length">
+                    <ngb-pagination class="mx-auto" [collectionSize]="(list$ | async)?.length!" [(page)]="currentPage" [pageSize]="pagePerShow">
+                    </ngb-pagination>
+                  </div>
+                </form>
+              </div>
+            </ng-container>
+          </app-base>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

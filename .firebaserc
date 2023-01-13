@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "yayago-all": {
+      "hosting": {
+        "YayaGo": [
+          "yayago-all"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "yayago-all"
+  }
+}

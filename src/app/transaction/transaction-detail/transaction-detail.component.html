@@ -1,0 +1,111 @@
+<div class="transaction-detail">
+  <div class="container">
+    <div class="transaction-detail__back py-3">
+      <a class="btn btn-sm btn-link non-decoration" [routerLink]="['/transactions']">
+        <i class="fa-solid fa-arrow-left me-1"></i>
+        Back
+      </a>
+    </div>
+    <div class="transaction-detail__content d-flex flex-column" *ngIf="transaction">
+      <div class="transaction-detail__content--left mb-3">
+        <h4 class="mb-3 align-middle">Summary</h4>
+        <div class="transaction-summary card">
+          <div class="card-body">
+            <table class="table mb-4">
+              <tbody>
+                <tr>
+                  <td class="align-middle">Date</td>
+                  <td class="align-middle text-primary">{{ transaction.date.year + '-' + transaction.date.month + '-' + transaction.date.day }}</td>
+                  <td class="align-middle">Category</td>
+                  <td class="align-middle text-primary">
+                    <a class="btn btn-link non-decoration text-info" [routerLink]="['/category/'+transaction.category?.id]">{{transaction.category?.name}}</a>
+                  </td>
+                  <!-- <td class="align-middle">Account</td>
+                  <td class="align-middle text-primary">{{transaction.account?.name || 'Default'}}</td> -->
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td class="align-middle">Name</td>
+                  <td class="align-middle text-primary">{{transaction.name}}</td>
+                  <td class="align-middle">Amount</td>
+                  <td class="align-middle text-danger">{{transaction.amount | currency:'$'}}</td>
+                  <td class="align-middle">Rates</td>
+                  <td class="align-middle text-primary">
+                    <ol class="d-flex">
+                      <li *ngFor="let i of [0,1,2,3,4]">
+                        <i class="fa-regular fa-star" *ngIf="transaction.rates - i <= 0"></i>
+                        <i class="fa-solid fa-star-half-stroke" *ngIf="transaction.rates - i === 0.5"></i>
+                        <i class="fa-solid fa-star" *ngIf="transaction.rates - i > 0 && transaction.rates - i !== 0.5"></i>
+                      </li>
+                    </ol>
+                  </td>
+                </tr>
+                <tr>
+                  <td class="align-middle">Address</td>
+                  <td colspan="5" class="align-middle text-primary">{{transaction.address}}</td>
+                </tr>
+                <tr>
+                  <td class="align-middle">Comments</td>
+                  <td colspan="5" class="align-middle text-primary">{{transaction.comments}}</td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="transaction-summary__edit text-center">
+              <button type="button" class="btn btn-success" (click)="edit()">Edit</button>
+              <button type="button" class="btn btn-danger ms-3" (click)="delete()">Delete</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="transaction-detail__content--right">
+        <h4 class="mb-2 align-middle">Items</h4>
+        <div class="transaction-items">
+          <app-base>
+            <ng-container>
+              <div class="table-content">
+                <form>
+                  <app-custom-table
+                    [headers]="itemHeaders"
+                    (add)="addItem()"
+                  >
+                    <ng-container>
+                      <tbody *ngIf="(itmeList$ | async)">
+                        <tr *ngFor="let item of (itmeList$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
+                          <td class="align-middle">{{item.name}}</td>
+                          <td class="align-middle">
+                            <ol class="d-flex">
+                              <li *ngFor="let i of [0,1,2,3,4]">
+                                <i class="fa-regular fa-star" *ngIf="item.rates - i <= 0"></i>
+                                <i class="fa-solid fa-star-half-stroke" *ngIf="item.rates - i === 0.5"></i>
+                                <i class="fa-solid fa-star" *ngIf="item.rates - i > 0 && item.rates - i !== 0.5"></i>
+                              </li>
+                            </ol>
+                          </td>
+                          <td class="align-middle">{{item.amount | currency:'$'}}</td>
+                          <td class="align-middle">{{item.comments}}</td>
+                          <td class="text-end col-3">
+                            <button class="btn btn-sm btn-outline-warning non-outline" type="button" (click)="editItem(item)">
+                              <i class="fa-solid fa-pen"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="deleteItem(item)">
+                              <i class="fa-solid fa-trash"></i>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </ng-container>
+                  </app-custom-table>
+                  <div class="d-flex justify-content-between p-2" *ngIf="(itmeList$ | async)?.length">
+                    <ngb-pagination class="mx-auto" [collectionSize]="(itmeList$ | async)?.length!" [(page)]="currentPage" [pageSize]="pagePerShow">
+                    </ngb-pagination>
+                  </div>
+                </form>
+              </div>
+            </ng-container>
+          </app-base>          
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

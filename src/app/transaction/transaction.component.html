@@ -1,0 +1,98 @@
+<div class="transactions p-3">
+  <div class="container">
+    <div class="transactions__content d-flex flex-column">
+      <div class="transactions-summary card">
+        <div class="card-header align-middle">
+          <h4 class="text-center d-flex mb-0">
+            <a class="btn btn-sm btn-link non-decoration" href="javascript:void(0);" (click)="prvMonth()">
+              <i class="fa-solid fa-arrow-left"></i>
+            </a>
+            <span class="mx-auto">{{ currentYear }} {{ mapMonth() }} {{ title }}</span>
+            <a class="btn btn-sm btn-link non-decoration" href="javascript:void(0);" (click)="nextMonth()">
+              <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </h4>
+        </div>
+        <div class="transaction-summary__content card-body">
+          <div class="transaction-summary__total d-flex flex-row">
+            <div class="transaction-summary__total--records col-6 pe-3">
+              <p class="d-flex mb-0">
+                <span>Total Records</span>
+                <span class="ms-auto text-primary">{{ summary.length }}</span>
+              </p>
+            </div>
+            <div class="transaction-summary__total--amount col-6 ms-auto ps-3">
+              <p class="d-flex mb-0">
+                <span>Total Amount</span>
+                <span class="ms-auto text-danger">{{ summary.amount | currency:'$' }}</span>
+              </p>
+            </div>
+          </div>
+          <hr>
+          <div class="transaction-summary__category d-flex flex-row">
+            <div class="transaction-summary__total--records col-6 pe-3">
+              <ol>
+                <li *ngFor="let name of categoryName; let even = even">
+                  <p class="d-flex mb-0" *ngIf="even">
+                    <span>
+                      <a class="btn btn-sm btn-link non-decoration text-info p-0" [routerLink]="['/category/'+summary.category[name].id]">{{name}}</a>
+                    </span>
+                    <span class="ms-auto text-danger">{{ summary.category[name].amount | currency:'$' }}</span>
+                  </p>
+                </li>
+              </ol>
+            </div>
+            <div class="transaction-summary__total--amount col-6 ps-3 ms-auto">
+              <ol>
+                <li *ngFor="let name of categoryName; let even = even">
+                  <p class="d-flex mb-0" *ngIf="!even">
+                    <span>
+                      <a class="btn btn-sm btn-link non-decoration text-info p-0" [routerLink]="['/category/'+summary.category[name].id]">{{name}}</a>
+                    </span>
+                    <span class="ms-auto text-danger">{{ summary.category[name].amount | currency:'$' }}</span>
+                  </p>
+                </li>
+              </ol>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="transactions-list">
+        <app-base>
+          <ng-container>
+            <div class="table-content">
+              <form>
+                <app-custom-table
+                  [headers]="headers"
+                  (add)="add()"
+                >
+                  <ng-container>
+                    <tbody *ngIf="(list$ | async)">
+                      <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
+                        <td class="align-middle">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
+                        <td class="align-middle">{{item.name}}</td>
+                        <td class="align-middle text-info">
+                          <a class="btn btn-link non-decoration text-info px-0" [routerLink]="['/category/'+item.category.id]">{{item.category.name}}</a>
+                        </td>
+                        <td class="align-middle text-danger">{{item.amount | currency:'$'}}</td>
+                        <td class="text-end col-3">
+                          <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
+                            <i class="fa-regular fa-file-lines"></i>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </ng-container>
+                </app-custom-table>
+                <div class="d-flex justify-content-between p-2" *ngIf="(list$ | async)?.length">
+                  <ngb-pagination class="mx-auto" [collectionSize]="(list$ | async)?.length!" [(page)]="currentPage" [pageSize]="pagePerShow">
+                  </ngb-pagination>
+                </div>
+              </form>
+            </div>
+          </ng-container>
+        </app-base>
+      </div>
+    </div>
+  </div>
+</div>

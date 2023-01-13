@@ -1,0 +1,53 @@
+<div class="gift-game">
+  <div class="container d-flex">
+    <div class="list-summary col-4 text-center mx-auto p-3">
+      <h1 class="my-3">Gift Game</h1>
+      <form (ngSubmit)="onSubmit()" [formGroup]="giftForm">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="login-form-name">Name</span>
+          <input type="text" class="form-control" formControlName="name">
+          <button class="btn btn-outline-primary" type="submit" id="button-add">Add</button>
+        </div>
+      </form>
+      <div class="list-content">
+        <ol>
+          <li class="mb-2 d-flex w-100" *ngFor="let item of giftList$ | async">
+            <button class="btn btn-outline-primary" type="button" (click)="selectGame(item)">{{ item.name }}</button>
+            <button class="btn btn-outline-danger non-outline ms-auto" (click)="removeList(item.id)">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </li>
+        </ol>
+      </div>
+    </div>
+    <div class="game-detail col-4 mx-auto text-center p-3" *ngIf="selectedGame">
+      <h1 class="my-3">{{ selectedGame.name }}</h1>
+      <form (ngSubmit)="addPeople()" [formGroup]="peopleForm">
+        <div class="input-group mb-3">
+          <span class="input-group-text" id="login-form-name">Name</span>
+          <input type="text" class="form-control" formControlName="name">
+          <button class="btn btn-outline-primary" type="submit" id="button-add">Add</button>
+        </div>
+      </form>
+      <ol>
+        <li class="d-flex w-100" *ngFor="let p of selectedGame.people; let i = index">
+          <span class="my-auto">{{ p.name }}</span>
+          <span class="ms-auto">
+            <button class="btn btn-outline-danger non-outline" (click)="removePeople(i)">
+              <i class="fa-regular fa-trash-can"></i>
+            </button>
+          </span>
+        </li>
+      </ol>
+      <button class="btn btn-primary" (click)="startGame()">{{ selectedGame.started ? 'Reset' : 'Start'}}</button>
+    </div>
+    <div class="game-result col-4 mx-auto text-center p-3" *ngIf="selectedGame && selectedGame.started">
+      <h1>Result</h1>
+      <ol>
+        <li class="w-100" *ngFor="let p of selectedGame.people">
+          {{ p.name }} -> {{ p.sendTo }}
+        </li>
+      </ol>
+    </div>
+  </div>
+</div>

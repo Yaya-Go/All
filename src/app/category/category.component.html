@@ -1,0 +1,64 @@
+<div class="category py-4">
+  <div class="container">
+    <div class="category-content">
+      <div class="card">
+        <div class="card-header d-flex">
+          <h1 class="mb-0">
+            Category
+          </h1>
+          <div class="add ms-auto my-auto">
+            <button class="btn btn-sm btn-primary" type="button" (click)="add()">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+        </div>
+        <div class="card-body row d-flex">
+          <div class="body-left col-sm-12 col-md-6">
+            <ol>
+              <li *ngFor="let item of (list$ | async); let even = even">
+                <div class="d-flex px-3 py-1" *ngIf="even">
+                  <span>
+                    <a class="btn btn-link btn-sm non-decoration text-info" [routerLink]="['/category/+item.id']">{{item.name}}</a>
+                  </span>
+                  <div class="ms-auto">
+                    <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
+                      <i class="fa-regular fa-file-lines"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-warning non-outline" type="button" (click)="edit(item)">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="delete(item)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <div class="body-right col-sm-12 col-md-6">
+            <ol>
+              <li *ngFor="let item of (list$ | async); let even = even">
+                <div class="d-flex px-3 py-1" *ngIf="!even">
+                  <span>
+                    <a class="btn btn-link btn-sm non-decoration text-info" [routerLink]="['/category/+item.id']">{{item.name}}</a>
+                  </span>
+                  <div class="ms-auto">
+                    <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
+                      <i class="fa-regular fa-file-lines"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-warning non-outline" type="button" (click)="edit(item)">
+                      <i class="fa-solid fa-pen"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="delete(item)">
+                      <i class="fa-solid fa-trash"></i>
+                    </button>
+                  </div>
+                </div>
+              </li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
