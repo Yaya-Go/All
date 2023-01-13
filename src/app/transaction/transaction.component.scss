@@ -35,6 +35,12 @@
             }
           }
         }
+        .pie-chart {
+          @include media-breakpoint-up(lg) {
+            width: 500px;
+            height: 500px;
+          }
+        }
       }
     }
   }

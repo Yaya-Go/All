@@ -18,7 +18,7 @@
               <li *ngFor="let item of (list$ | async); let even = even">
                 <div class="d-flex" *ngIf="even">
                   <span>
-                    <a class="btn btn-link btn-sm non-decoration text-info" [routerLink]="['/category/+item.id']">{{item.name}}</a>
+                    <a class="btn btn-link btn-sm non-decoration text-info" [routerLink]="['/category/'+item.id]">{{item.name}}</a>
                   </span>
                   <div class="ms-auto">
                     <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
@@ -40,7 +40,7 @@
               <li *ngFor="let item of (list$ | async); let even = even">
                 <div class="d-flex" *ngIf="!even">
                   <span>
-                    <a class="btn btn-link btn-sm non-decoration text-info" [routerLink]="['/category/+item.id']">{{item.name}}</a>
+                    <a class="btn btn-link btn-sm non-decoration text-info" [routerLink]="['/category/'+item.id]">{{item.name}}</a>
                   </span>
                   <div class="ms-auto">
                     <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">

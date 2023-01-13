@@ -32,6 +32,7 @@
         </button>
         <div *ngIf="submitted && controls['password'].errors" class="invalid-feedback">
           <div *ngIf="controls['password'].errors['required']">Password is required</div>
+          <div *ngIf="controls['password'].errors['minlength']">Password is at least 6 length</div>
         </div>
       </div>
       <div class="input-group mb-3">
@@ -45,6 +46,7 @@
         </button>
         <div *ngIf="submitted && controls['confirmPassword'].errors" class="invalid-feedback">
           <div *ngIf="controls['confirmPassword'].errors['required']">Confirm Password is required</div>
+          <div *ngIf="controls['confirmPassword'].errors['minlength']">Confirm Password is at least 6 length</div>
           <div *ngIf="controls['confirmPassword'].errors['confirmedValidator']">Passowrd should be matched</div>
         </div>
       </div>

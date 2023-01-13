@@ -5,19 +5,45 @@ import { BaseComponent } from '../shared/base/base.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { SharedModule } from '../shared/shared.module';
 import { AddTransactionComponent } from '../shared/add-transaction/add-transaction.component';
-import { Router, RouterModule } from '@angular/router';
+import { Router } from '@angular/router';
 import { TRANSACTION_HEADERS } from '../core/models/table-headers.model';
+import { ChartOptions } from 'chart.js';
 
 @Component({
   selector: 'app-transaction',
   standalone: true,
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './transaction.component.html',
   styleUrls: ['./transaction.component.scss']
 })
 export class TransactionComponent extends BaseComponent implements OnInit {
 
   categoryName: string[] = [];
+
+  public pieChartOptions: ChartOptions<'pie'> = {
+    responsive: false,
+    plugins: {
+      tooltip: {
+        callbacks: {
+          label: function(context) {
+            let label = context.label || '';
+
+            if (label) {
+                label += ': ';
+            }
+            if (context.formattedValue !== null) {
+                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(context.formattedValue));
+            }
+            return label;
+          }
+        }
+      }
+    }
+  };
+  public pieChartLabels: any[];
+  public pieChartDatasets: any;
+  public pieChartLegend = false;
+  public pieChartPlugins = [];
 
   constructor(
     private transService: TransactionService,
@@ -77,26 +103,21 @@ export class TransactionComponent extends BaseComponent implements OnInit {
       amount: 0,
       category: {}
     };
-    this.categoryName = [];
+
     this.list$.subscribe(list => {
       this.summary.length = list.length;
       list.forEach(l => {
         this.summary.amount += l.amount;
-        if (!this.summary.category) {
-          this.summary.category = {};
-        }
         if (!this.summary.category[l.category.name]) {
-          this.summary.category[l.category.name] = {
-            id: '',
-            amount: 0
-          }
+          this.summary.category[l.category.name] = 0
         }
-        this.summary.category[l.category.name].id = l.category.id;
-        this.summary.category[l.category.name].amount += l.amount;
-        if (this.categoryName.indexOf(l.category.name) === -1) {
-          this.categoryName.push(l.category.name);
-        }
+        this.summary.category[l.category.name] += l.amount;
       });
+
+      this.pieChartLabels = Object.keys(this.summary.category);
+      this.pieChartDatasets = [ {
+        data: Object.values(this.summary.category)
+      } ];
     });
   }
 }

@@ -2,15 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../core/services/category.service';
 import { SharedModule } from '../shared/shared.module';
-import { BaseComponent } from '../shared/base/base.component';
-import { Router, RouterModule } from '@angular/router';
-import { NAME_ONLY_HEADER } from '../core/models/table-headers.model';
+import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })

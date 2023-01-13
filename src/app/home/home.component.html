@@ -1,102 +1,13 @@
 <div class="home">
   <div class="container" *ngIf="!isLoading else loading">
-    <div class="row">
-      <div class="col-sm-12 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{ currentYear }} Transaction</h4>
-            <p class="d-flex mb-0">
-              <span>Total Records</span>
-              <span class="ms-auto text-primary">{{ summary[currentYear].transactions.length }}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Total Amount</span>
-              <span class="ms-auto text-danger">{{ summary[currentYear].transactions.amount | currency:'$' }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{ currentYear }} Income</h4>
-            <p class="d-flex mb-0">
-              <span>Total Records</span>
-              <span class="ms-auto text-primary">{{ summary[currentYear].income.length }}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Total Income</span>
-              <span class="ms-auto text-success">{{ summary[currentYear].income.amount | currency:'$' }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row pt-5">
-      <div class="col-sm-12 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{ currentYear-1 }} Transaction</h4>
-            <p class="d-flex mb-0">
-              <span>Total Records</span>
-              <span class="ms-auto text-primary">{{ summary[currentYear-1].transactions.length }}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Total Amount</span>
-              <span class="ms-auto text-danger">{{ summary[currentYear-1].transactions.amount | currency:'$' }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{ currentYear-1 }} Income</h4>
-            <p class="d-flex mb-0">
-              <span>Total Records</span>
-              <span class="ms-auto text-primary">{{ summary[currentYear-1].income.length }}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Total Income</span>
-              <span class="ms-auto text-success">{{ summary[currentYear-1].income.amount | currency:'$' }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="row pt-5">
-      <div class="col-sm-12 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{ currentYear-2 }} Transaction</h4>
-            <p class="d-flex mb-0">
-              <span>Total Records</span>
-              <span class="ms-auto text-primary">{{ summary[currentYear-2].transactions.length }}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Total Amount</span>
-              <span class="ms-auto text-danger">{{ summary[currentYear-2].transactions.amount | currency:'$' }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-12 col-md-6">
-        <div class="card">
-          <div class="card-body">
-            <h4 class="card-title">{{ currentYear-2 }} Income</h4>
-            <p class="d-flex mb-0">
-              <span>Total Records</span>
-              <span class="ms-auto text-primary">{{ summary[currentYear-2].income.length }}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Total Income</span>
-              <span class="ms-auto text-success">{{ summary[currentYear-2].income.amount | currency:'$' }}</span>
-            </p>
-          </div>
-        </div>
-      </div>
+    <div class="mx-auto col-xl-8 col-sm-12">
+      <canvas baseChart
+        [data]="barChartData"
+        [options]="barChartOptions"
+        [plugins]="barChartPlugins"
+        [legend]="barChartLegend"
+        [type]="'bar'">
+      </canvas>
     </div>
   </div>
 </div>

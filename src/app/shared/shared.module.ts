@@ -10,6 +10,7 @@ import { AddTransactionItemComponent } from './add-transaction-item/add-transact
 import { DetailComponent } from './detail/detail.component';
 import { RouterModule } from '@angular/router';
 import { AddIncomeComponent } from './add-income/add-income.component';
+import { NgChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { AddIncomeComponent } from './add-income/add-income.component';
     FormsModule,
     ReactiveFormsModule,
     NgbDatepickerModule,
-    RouterModule
+    RouterModule,
+    NgChartsModule
   ],
   exports: [
     NameFilterPipe,
@@ -36,7 +38,9 @@ import { AddIncomeComponent } from './add-income/add-income.component';
     NgbPaginationModule,
     FormsModule,
     ReactiveFormsModule,
-    DetailComponent
+    DetailComponent,
+    NgChartsModule,
+    RouterModule
   ]
 })
 export class SharedModule { }

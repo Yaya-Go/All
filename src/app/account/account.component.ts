@@ -9,7 +9,7 @@ import { NAME_ONLY_HEADER } from '../core/models/table-headers.model';
 @Component({
   selector: 'app-account',
   standalone: true,
-  imports: [CommonModule, SharedModule, RouterModule],
+  imports: [CommonModule, SharedModule],
   templateUrl: './account.component.html',
   styleUrls: ['./account.component.scss']
 })

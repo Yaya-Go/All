@@ -29,31 +29,17 @@
             </div>
           </div>
           <hr>
-          <div class="transaction-summary__category d-flex">
-            <div class="transaction-summary__category--records col-6 pe-3">
-              <ol>
-                <li *ngFor="let name of categoryName; let even = even">
-                  <p class="d-flex category-record mb-0" *ngIf="even">
-                    <span class="category-record__name text-truncate">
-                      <a class="btn btn-sm btn-link non-decoration text-info p-0" [routerLink]="['/category/'+summary.category[name].id]">{{name}}</a>
-                    </span>
-                    <span class="ms-auto text-danger">{{ summary.category[name].amount | currency:'$' }}</span>
-                  </p>
-                </li>
-              </ol>
-            </div>
-            <div class="transaction-summary__category--records col-6 ps-3 ms-auto">
-              <ol>
-                <li *ngFor="let name of categoryName; let even = even">
-                  <p class="d-flex category-record mb-0" *ngIf="!even">
-                    <span class="category-record__name text-truncate">
-                      <a class="btn btn-sm btn-link non-decoration text-info p-0" [routerLink]="['/category/'+summary.category[name].id]">{{name}}</a>
-                    </span>
-                    <span class="ms-auto text-danger">{{ summary.category[name].amount | currency:'$' }}</span>
-                  </p>
-                </li>
-              </ol>
-            </div>
+          <div class="col-lg-8 col-sm-12 mx-auto">
+            <canvas baseChart
+              [type]="'pie'"
+              [datasets]="pieChartDatasets"
+              [labels]="pieChartLabels"
+              [options]="pieChartOptions"
+              [plugins]="pieChartPlugins"
+              [legend]="pieChartLegend"
+              class="mx-auto"
+            >
+            </canvas>
           </div>
         </div>
       </div>

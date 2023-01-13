@@ -15,14 +15,19 @@ const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'auth', loadChildren: () => import('./auth/auth.routes')
+  },
+  {
     canActivate: [AuthGuard],
     path: 'home', component: HomeComponent
   },
   {
-    path: 'auth', loadChildren: () => import('./auth/auth.routes')
+    canActivate: [AuthGuard],
+    path: 'settings', loadChildren: () => import('./settings/settings.routes')
   },
   {
-    path: 'settings', loadChildren: () => import('./settings/settings.routes')
+    canActivate: [AuthGuard],
+    path: 'statistic', loadChildren: () => import('./statistic/statistic.routes')
   },
   // {
   //   canActivate: [AuthGuard],

@@ -1,0 +1,16 @@
+<div class="statistic ">
+  <div class="container">
+    <div class="chart d-none d-md-block">
+      <canvas baseChart
+        [datasets]="barChartData.datasets"
+        [labels]="months"
+        [options]="barChartOptions"
+        [legend]="barChartLegend"
+        [type]="'bar'"></canvas>
+    </div>
+
+    <div class="d-sm-block d-md-none">
+      <p>Not available on mobile view</p>
+    </div>
+  </div>
+</div>
