@@ -1,6 +1,6 @@
 <div class="transaction-detail">
   <div class="container">
-    <div class="transaction-detail__back py-3">
+    <div class="transaction-detail__back">
       <a class="btn btn-sm btn-link non-decoration" [routerLink]="['/transactions']">
         <i class="fa-solid fa-arrow-left me-1"></i>
         Back
@@ -8,12 +8,12 @@
     </div>
     <div class="transaction-detail__content d-flex flex-column" *ngIf="transaction">
       <div class="transaction-detail__content--left mb-3">
-        <h4 class="mb-3 align-middle">Summary</h4>
+        <h4 class="mb-3 align-middle text-center">Summary</h4>
         <div class="transaction-summary card">
           <div class="card-body">
             <table class="table mb-4">
               <tbody>
-                <tr>
+                <tr class="d-none d-md-table-row">
                   <td class="align-middle">Date</td>
                   <td class="align-middle text-primary">{{ transaction.date.year + '-' + transaction.date.month + '-' + transaction.date.day }}</td>
                   <td class="align-middle">Category</td>
@@ -25,13 +25,42 @@
                   <td></td>
                   <td></td>
                 </tr>
-                <tr>
+                <tr class="d-none d-md-table-row">
                   <td class="align-middle">Name</td>
                   <td class="align-middle text-primary">{{transaction.name}}</td>
                   <td class="align-middle">Amount</td>
                   <td class="align-middle text-danger">{{transaction.amount | currency:'$'}}</td>
                   <td class="align-middle">Rates</td>
                   <td class="align-middle text-primary">
+                    <ol class="d-flex">
+                      <li *ngFor="let i of [0,1,2,3,4]">
+                        <i class="fa-regular fa-star" *ngIf="transaction.rates - i <= 0"></i>
+                        <i class="fa-solid fa-star-half-stroke" *ngIf="transaction.rates - i === 0.5"></i>
+                        <i class="fa-solid fa-star" *ngIf="transaction.rates - i > 0 && transaction.rates - i !== 0.5"></i>
+                      </li>
+                    </ol>
+                  </td>
+                </tr>
+
+                <tr class="d-md-none d-sm-table-row">
+                  <td colspan="3" class="align-middle">Date</td>
+                  <td colspan="3" class="align-middle text-primary">{{ transaction.date.year + '-' + transaction.date.month + '-' + transaction.date.day }}</td>
+                </tr>
+                <tr class="d-md-none d-sm-table-row">
+                  <td colspan="3" class="align-middle">Category</td>
+                  <td colspan="3" class="align-middle text-primary"><a class="p-0 btn btn-link non-decoration text-info" [routerLink]="['/category/'+transaction.category?.id]">{{transaction.category?.name}}</a></td>
+                </tr>
+                <tr class="d-md-none d-sm-table-row">
+                  <td colspan="3" class="align-middle">Name</td>
+                  <td colspan="3" class="align-middle text-primary">{{transaction.name}}</td>
+                </tr>
+                <tr class="d-md-none d-sm-table-row">
+                  <td colspan="3" class="align-middle">Amount</td>
+                  <td colspan="3" class="align-middle text-danger">{{transaction.amount | currency:'$'}}</td>
+                </tr>
+                <tr class="d-md-none d-sm-table-row">
+                  <td colspan="3" class="align-middle">Rates</td>
+                  <td colspan="3" class="align-middle text-primary">
                     <ol class="d-flex">
                       <li *ngFor="let i of [0,1,2,3,4]">
                         <i class="fa-regular fa-star" *ngIf="transaction.rates - i <= 0"></i>

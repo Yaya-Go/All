@@ -3,7 +3,7 @@
     <thead>
       <tr>
         <th scope="col" *ngFor="let h of headers" [ngClass]="h.className">{{ h.name }}</th>
-        <th scope="col" class="text-end col-3">
+        <th scope="col" class="text-end">
           <button class="btn btn-sm btn-primary" type="button" (click)="addItem()">
             <i class="fa-solid fa-plus"></i>
           </button>

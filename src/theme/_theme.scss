@@ -1,0 +1,27 @@
+/* Importing Bootstrap SCSS file. */
+@import 'bootstrap/scss/bootstrap';
+@import 'bootstrap/scss/functions';
+@import 'bootstrap/scss/variables';
+@import 'bootstrap/scss/mixins';
+
+body {
+  min-height: 100vh;
+}
+
+ol {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.non-outline {
+  outline: none;
+  border: none;
+}
+
+a.non-decoration {
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+}

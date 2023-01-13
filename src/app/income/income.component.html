@@ -1,4 +1,4 @@
-<div class="income p-3">
+<div class="income">
   <div class="container">
     <div class="income__content d-flex flex-column">
       <h1 class="text-center">Income</h1>
@@ -32,10 +32,10 @@
           <ng-container>
             <tbody *ngIf="(list$ | async)">
               <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
-                <td class="align-middle">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
+                <td class="align-middle d-none d-md-table-cell">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
                 <td class="align-middle">{{item.from}}</td>
-                <td class="align-middle">{{item.type}}</td>
-                <td class="align-middle">{{item.amount | currency:'$'}}</td>
+                <td class="align-middle d-none d-md-table-cell">{{item.type}}</td>
+                <td class="align-middle text-success">{{item.amount | currency:'$'}}</td>
                 <td class="text-end col-3">
                   <button class="btn btn-sm btn-outline-warning non-outline" type="button" (click)="edit(item)">
                     <i class="fa-solid fa-pen"></i>

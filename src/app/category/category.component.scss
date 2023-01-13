@@ -1,0 +1,23 @@
+@import 'theme';
+
+.category {
+  .category-list {
+    flex-direction: row;
+    @include media-breakpoint-down(sm) {
+      flex-direction: column;
+    }
+
+    .body-left {
+      padding-right: 1rem;
+      @include media-breakpoint-down(sm) {
+        padding-right: 0;
+      }
+    }
+    .body-right {
+      padding-left: 1rem;
+      @include media-breakpoint-down(sm) {
+        padding-left: 0;
+      }
+    }
+  }
+}

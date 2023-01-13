@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../core/services/auth.service';
 import { Router, RouterModule } from '@angular/router';
 
@@ -15,6 +15,13 @@ import { Router, RouterModule } from '@angular/router';
 export class LoginComponent {
 
   loginForm: FormGroup;
+  submitted: boolean;
+  isShowPassword: boolean;
+
+  get controls(): { [key: string]: AbstractControl } {
+    return this.loginForm.controls;
+  }
+
   constructor(
     private fb: FormBuilder,
     private auth: AuthService,
@@ -28,7 +35,13 @@ export class LoginComponent {
       password: ['', [Validators.required]]
     });
   }
+
+  showPassword() {
+    this.isShowPassword = !this.isShowPassword;
+  }
+
   onSubmit() {
+    this.submitted = true;
     if (this.loginForm.valid) {
       this.auth.SignIn(this.loginForm.value);
     }

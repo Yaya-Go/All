@@ -1,14 +1,29 @@
-<div class="login-form pt-3">
+<div class="login-form">
   <div class="container text-center col-lg-6 col-sm-12 col-md-8">
     <h1 class="mb-5">Login</h1>
     <form (ngSubmit)="onSubmit()" [formGroup]="loginForm">
       <div class="input-group mb-3">
         <span class="input-group-text" id="login-form-email">Email</span>
-        <input type="email" class="form-control" formControlName="email">
+        <input type="email" class="form-control" formControlName="email"
+          [ngClass]="{ 'is-invalid': submitted && controls['email'].errors }"
+        >
+        <div *ngIf="submitted && controls['email'].errors" class="invalid-feedback">
+          <div *ngIf="controls['email'].errors['required']">Email is required</div>
+          <div *ngIf="controls['email'].errors['email']">Email format is not correct</div>
+        </div>
       </div>
       <div class="input-group mb-3">
         <span class="input-group-text" id="login-form-password">Password</span>
-        <input type="password" class="form-control" formControlName="password">
+        <input [type]="isShowPassword ? 'text' : 'password'" class="form-control" formControlName="password"
+          [ngClass]="{ 'is-invalid': submitted && controls['password'].errors }"
+        >
+        <button class="btn btn-outline-secondary" type="button" (click)="showPassword()">
+          <i *ngIf="!isShowPassword" class="fa-regular fa-eye"></i>
+          <i *ngIf="isShowPassword" class="fa-regular fa-eye-slash"></i>
+        </button>
+        <div *ngIf="submitted && controls['password'].errors" class="invalid-feedback">
+          <div *ngIf="controls['password'].errors['required']">Password is required</div>
+        </div>
       </div>
       <div class="actions d-flex">
         <a class="btn btn-sm btn-link non-decoration" [routerLink]="['/auth/register']">Don't have an account?</a>

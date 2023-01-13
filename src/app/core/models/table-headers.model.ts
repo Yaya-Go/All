@@ -5,9 +5,9 @@ export const NAME_ONLY_HEADER: TableHeaders[] = [
 ];
 
 export const TRANSACTION_HEADERS: TableHeaders[] = [
-  { name: 'Date' },
+  { name: 'Date', className: 'd-none d-md-table-cell' },
   { name: 'Name' },
-  { name: 'Category' },
+  { name: 'Category', className: 'd-none d-md-table-cell' },
   { name: 'Amount' }
 ];
 
@@ -19,8 +19,8 @@ export const TRANSACTION_ITEM_HEADERS: TableHeaders[] = [
 ];
 
 export const INCOME_HEADERS: TableHeaders[] = [
-  { name: 'Date' },
+  { name: 'Date', className: 'd-none d-md-table-cell' },
   { name: 'From' },
-  { name: 'Type' },
+  { name: 'Type', className: 'd-none d-md-table-cell' },
   { name: 'Amount' }
 ];

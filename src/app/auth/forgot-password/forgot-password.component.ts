@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AuthService } from 'src/app/core/services/auth.service';
 
@@ -14,6 +14,11 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class ForgotPasswordComponent {
 
   forgotForm: FormGroup;
+  submitted: boolean;
+
+  get controls(): { [key: string]: AbstractControl } {
+    return this.forgotForm.controls;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -25,8 +30,9 @@ export class ForgotPasswordComponent {
   }
 
   onSubmit() {
+    this.submitted = true;
     if (this.forgotForm.valid) {
-      this.auth.ForgotPassword(this.forgotForm.controls['email'].value);
+      this.auth.ForgotPassword(this.controls['email'].value);
     }
   }
 }

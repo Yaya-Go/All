@@ -1,27 +1,27 @@
-<div class="transactions p-3">
+<div class="transactions">
   <div class="container">
     <div class="transactions__content d-flex flex-column">
       <div class="transactions-summary card">
         <div class="card-header align-middle">
           <h4 class="text-center d-flex mb-0">
-            <a class="btn btn-sm btn-link non-decoration" href="javascript:void(0);" (click)="prvMonth()">
+            <a class="btn btn-sm btn-link non-decoration my-auto" href="javascript:void(0);" (click)="prvMonth()">
               <i class="fa-solid fa-arrow-left"></i>
             </a>
             <span class="mx-auto">{{ currentYear }} {{ mapMonth() }} {{ title }}</span>
-            <a class="btn btn-sm btn-link non-decoration" href="javascript:void(0);" (click)="nextMonth()">
+            <a class="btn btn-sm btn-link non-decoration my-auto" href="javascript:void(0);" (click)="nextMonth()">
               <i class="fa-solid fa-arrow-right"></i>
             </a>
           </h4>
         </div>
         <div class="transaction-summary__content card-body">
-          <div class="transaction-summary__total d-flex flex-row">
-            <div class="transaction-summary__total--records col-6 pe-3">
+          <div class="transaction-summary__total d-flex">
+            <div class="transaction-summary__total--records col-md-6 col-sm-12">
               <p class="d-flex mb-0">
                 <span>Total Records</span>
                 <span class="ms-auto text-primary">{{ summary.length }}</span>
               </p>
             </div>
-            <div class="transaction-summary__total--amount col-6 ms-auto ps-3">
+            <div class="transaction-summary__total--amount col-md-6 col-sm-12">
               <p class="d-flex mb-0">
                 <span>Total Amount</span>
                 <span class="ms-auto text-danger">{{ summary.amount | currency:'$' }}</span>
@@ -29,12 +29,12 @@
             </div>
           </div>
           <hr>
-          <div class="transaction-summary__category d-flex flex-row">
-            <div class="transaction-summary__total--records col-6 pe-3">
+          <div class="transaction-summary__category d-flex">
+            <div class="transaction-summary__category--records col-6 pe-3">
               <ol>
                 <li *ngFor="let name of categoryName; let even = even">
-                  <p class="d-flex mb-0" *ngIf="even">
-                    <span>
+                  <p class="d-flex category-record mb-0" *ngIf="even">
+                    <span class="category-record__name text-truncate">
                       <a class="btn btn-sm btn-link non-decoration text-info p-0" [routerLink]="['/category/'+summary.category[name].id]">{{name}}</a>
                     </span>
                     <span class="ms-auto text-danger">{{ summary.category[name].amount | currency:'$' }}</span>
@@ -42,11 +42,11 @@
                 </li>
               </ol>
             </div>
-            <div class="transaction-summary__total--amount col-6 ps-3 ms-auto">
+            <div class="transaction-summary__category--records col-6 ps-3 ms-auto">
               <ol>
                 <li *ngFor="let name of categoryName; let even = even">
-                  <p class="d-flex mb-0" *ngIf="!even">
-                    <span>
+                  <p class="d-flex category-record mb-0" *ngIf="!even">
+                    <span class="category-record__name text-truncate">
                       <a class="btn btn-sm btn-link non-decoration text-info p-0" [routerLink]="['/category/'+summary.category[name].id]">{{name}}</a>
                     </span>
                     <span class="ms-auto text-danger">{{ summary.category[name].amount | currency:'$' }}</span>
@@ -69,13 +69,13 @@
                   <ng-container>
                     <tbody *ngIf="(list$ | async)">
                       <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
-                        <td class="align-middle">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
+                        <td class="align-middle d-none d-md-table-cell">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
                         <td class="align-middle">{{item.name}}</td>
-                        <td class="align-middle text-info">
+                        <td class="align-middle text-info d-none d-md-table-cell">
                           <a class="btn btn-link non-decoration text-info px-0" [routerLink]="['/category/'+item.category.id]">{{item.category.name}}</a>
                         </td>
                         <td class="align-middle text-danger">{{item.amount | currency:'$'}}</td>
-                        <td class="text-end col-3">
+                        <td class="align-middle text-end">
                           <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
                             <i class="fa-regular fa-file-lines"></i>
                           </button>

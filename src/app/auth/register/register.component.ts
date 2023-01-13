@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/core/services/auth.service';
 import { RouterModule } from '@angular/router';
 
@@ -14,6 +14,14 @@ import { RouterModule } from '@angular/router';
 export class RegisterComponent {
 
   registerForm: FormGroup;
+  submitted: boolean;
+
+  isShowPassword: boolean;
+  isShowConfirm: boolean;
+
+  get controls(): { [key: string]: AbstractControl } {
+    return this.registerForm.controls;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -47,12 +55,22 @@ export class RegisterComponent {
     };
   }
 
+  showPassword() {
+    this.isShowPassword = !this.isShowPassword;
+  }
+
+  showConfirm() {
+    this.isShowConfirm = !this.isShowConfirm;
+  }
+
   onSubmit() {
+    this.submitted = true;
     if (this.registerForm.valid) {
       this.auth.SignUp(
         this.registerForm.controls['email'].value, 
         this.registerForm.controls['password'].value, 
-        this.registerForm.controls['name'].value);
+        this.registerForm.controls['name'].value
+      );
     }
   }
 }

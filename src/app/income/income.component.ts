@@ -73,9 +73,9 @@ export class IncomeComponent {
       this.summary.length = list.length;
       list.forEach(l => {
         this.summary.amount += l.amount;
-        if (l.type === 'personal') {
+        if (l.type === 'Personal') {
           this.summary.personal += l.amount;
-        } else if (l.type === 'business') {
+        } else if (l.type === 'Business') {
           this.summary.business += l.amount;
         }
       });

@@ -1,0 +1,42 @@
+@import 'theme';
+
+.transactions {
+  &__content {
+    .transaction-summary {
+      &__content {
+        .transaction-summary__total {
+          flex-direction: row;
+          @include media-breakpoint-down(sm) {
+            flex-direction: column;
+          }
+
+          &--records {
+            padding-right: 1rem;
+            @include media-breakpoint-down(sm) {
+              padding-right: 0;
+            }
+          }
+          &--amount {
+            padding-left: 1rem;
+            margin-left: auto;
+            @include media-breakpoint-down(sm) {
+              padding-left: 0;
+              margin-left: 0;
+            }
+          }
+        }
+        .transaction-summary__category {
+          &--records {
+            .category-record {
+              &__name {
+                display: inline-block;
+                max-width: 50%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  
+}
