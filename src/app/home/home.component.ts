@@ -5,6 +5,8 @@ import { IncomeService } from '../core/services/income.service';
 import { combineLatest } from 'rxjs';
 import { NgChartsModule } from 'ng2-charts';
 import { ChartConfiguration } from 'chart.js';
+import { AuthService } from '../core/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -72,8 +74,14 @@ export class HomeComponent {
 
   constructor(
     private transService: TransactionService,
-    private incomeService: IncomeService
+    private incomeService: IncomeService,
+    private auth: AuthService,
+    private router: Router
   ) {
+    if (!this.auth.isLoggedIn) {
+      this.router.navigateByUrl('/auth/login');
+      return;
+    }
     this.isLoading = true;
     combineLatest([
       this.transService.getTransactionByYear(),

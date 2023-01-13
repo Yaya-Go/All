@@ -151,7 +151,7 @@ export class AuthService {
       localStorage.removeItem('user');
       setTimeout(() => {
         this.router.navigateByUrl('/auth/login');
-      })
+      }, 100);
     });
   }
 
