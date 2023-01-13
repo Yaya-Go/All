@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IncomeService } from 'src/app/core/services/income.service';
 
@@ -13,6 +13,11 @@ export class AddIncomeComponent implements OnInit {
   @Input() income: any;
 
   incomeForm: FormGroup;
+  submitted: boolean;
+
+  get controls(): { [key: string]: AbstractControl } {
+    return this.incomeForm.controls;
+  }
 
   constructor(
     private incomeService: IncomeService,
@@ -38,6 +43,7 @@ export class AddIncomeComponent implements OnInit {
   }
   
   onSubmit() {
+    this.submitted = true;
     if (this.incomeForm.valid) {
       if (this.income && this.income.id) {
         this.incomeService.update(this.incomeForm.value).then(() => this.modal.dismissAll());

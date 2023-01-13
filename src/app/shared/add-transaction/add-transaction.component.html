@@ -10,26 +10,47 @@
           ngbDatepicker
           formControlName="date"
           #d="ngbDatepicker"
+          [ngClass]="{ 'is-invalid': submitted && controls['date'].errors }"
         />
         <button class="btn btn-outline-secondary" (click)="d.toggle()" type="button">
           <i class="fa-solid fa-calendar-days"></i>
         </button>
+        <div *ngIf="submitted && controls['date'].errors" class="invalid-feedback">
+          <div *ngIf="controls['date'].errors['required']">Date is required</div>
+        </div>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingName" placeholder="Name" formControlName="name">
+        <input type="text" class="form-control" id="floatingName" placeholder="Name" formControlName="name"
+          [ngClass]="{ 'is-invalid': submitted && controls['name'].errors }"
+        >
         <label for="floatingName">Name</label>
+        <div *ngIf="submitted && controls['name'].errors" class="invalid-feedback">
+          <div *ngIf="controls['name'].errors['required']">Name is required</div>
+        </div>
       </div>
-      <select class="form-select mb-3" aria-label="Select Category" formControlName="categoryId">
-        <option value="">Select Category</option>
-        <option [ngValue]="item.id" *ngFor="let item of (categoryList$ | async)">{{ item.name }}</option>
-      </select>
+      <div class="mb-3">
+        <select class="form-select" aria-label="Select Category" formControlName="categoryId"
+          [ngClass]="{ 'is-invalid': submitted && controls['categoryId'].errors }"
+        >
+          <option value="">Select Category</option>
+          <option [ngValue]="item.id" *ngFor="let item of (categoryList$ | async)">{{ item.name }}</option>
+        </select>
+        <div *ngIf="submitted && controls['categoryId'].errors" class="invalid-feedback">
+          <div *ngIf="controls['categoryId'].errors['required']">Category is required</div>
+        </div>
+      </div>
       <!-- <select class="form-select mb-3" aria-label="Select Account" formControlName="account">
         <option value="null">Select Account</option>
         <option [value]="item" *ngFor="let item of (accountList$ | async)">{{ item.name }}</option>
       </select> -->
       <div class="form-floating mb-3">
-        <input type="number" class="form-control" formControlName="amount" id="floatingAmount" placeholder="Amount">
+        <input type="number" class="form-control" formControlName="amount" id="floatingAmount" placeholder="Amount"
+          [ngClass]="{ 'is-invalid': submitted && controls['amount'].errors }"
+        >
         <label for="floatingAmount">Amount</label>
+        <div *ngIf="submitted && controls['amount'].errors" class="invalid-feedback">
+          <div *ngIf="controls['amount'].errors['required']">Amount is required</div>
+        </div>
       </div>
       <div class="form-floating mb-3">
         <input type="number" min="0" max="5" step="0.5" class="form-control" id="floatingRates" placeholder="Rates" formControlName="rates">

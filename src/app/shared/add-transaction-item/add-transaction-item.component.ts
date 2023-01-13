@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { TransactionItemService } from 'src/app/core/services/transaction-item.service';
 
@@ -14,6 +14,11 @@ export class AddTransactionItemComponent implements OnInit {
   @Input() item: any;
 
   itemForm: FormGroup;
+  submitted: boolean;
+
+  get controls(): { [key: string]: AbstractControl } {
+    return this.itemForm.controls;
+  }
 
   constructor(
     private fb: FormBuilder,
@@ -41,6 +46,7 @@ export class AddTransactionItemComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
     if (this.itemForm.valid) {
       if (this.item && this.item.id) {
         this.itemService.update(this.itemForm.value).then(() => this.modal.dismissAll());

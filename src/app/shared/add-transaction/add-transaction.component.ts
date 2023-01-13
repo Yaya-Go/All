@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Observable, take } from 'rxjs';
 // import { AccountService } from 'src/app/core/services/account.service';
@@ -22,6 +22,12 @@ export class AddTransactionComponent implements OnInit {
   transForm: FormGroup;
   categoryList$: Observable<any[]>;
 
+  submitted: boolean;
+
+  get controls(): { [key: string]: AbstractControl } {
+    return this.transForm.controls;
+  }
+
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
@@ -30,7 +36,10 @@ export class AddTransactionComponent implements OnInit {
     private modal: NgbModal
   ) {
     this.transForm = this.fb.group({
-      date: [{ day: new Date().getDate(), month: new Date().getMonth()+1, year: new Date().getFullYear() }],
+      date: [
+        { day: new Date().getDate(), month: new Date().getMonth()+1, year: new Date().getFullYear() },
+        [Validators.required]
+      ],
       name: ['', [Validators.required]],
       category: ['', [Validators.required]],
       categoryId: ['', [Validators.required]],
@@ -72,6 +81,7 @@ export class AddTransactionComponent implements OnInit {
   }
 
   onSubmit() {
+    this.submitted = true;
     if (this.transForm.valid) {
       if (this.transaction && this.transaction.id) {
         this.transService.update({ ...this.transForm.value })
