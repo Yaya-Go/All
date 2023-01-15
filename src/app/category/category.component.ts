@@ -52,5 +52,4 @@ export class CategoryComponent implements OnInit {
       this.router.navigateByUrl(`/category/${id}`);
     }
   }
-  
 }

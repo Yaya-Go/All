@@ -1,13 +1,11 @@
 import { Injectable } from '@angular/core';
 import { 
   CollectionReference, DocumentData, Firestore, 
-  collection, addDoc, deleteDoc, doc, docSnapshots,
-  query, updateDoc, where, collectionChanges, setDoc, collectionData, docData,
+  collection, deleteDoc, doc, docSnapshots,
+  query, where, collectionChanges, setDoc, collectionData, docData,
   orderBy
-  
 } from '@angular/fire/firestore';
 import { map, Observable } from 'rxjs';
-import { Actions } from '../models/actions.model';
 import { AuthService } from './auth.service';
 
 export enum DocumentName {
@@ -16,7 +14,8 @@ export enum DocumentName {
   ACCOUNT = 'account',
   TRANSACTION = 'transactions',
   TRANSACTION_ITEM = 'transaction-items',
-  INCOME = 'income'
+  INCOME = 'income',
+  QUICK = 'quick'
 }
 
 @Injectable({
@@ -88,7 +87,7 @@ export class BaseService {
       this.firestore,
       `${this.docName}/${item.id}`
     );
-    return updateDoc(reference, { ...item, updatedAt: Date.now().toString() });
+    return setDoc(reference, { ...item, updatedAt: Date.now().toString() }, { merge: true });
   }
 
   delete(id: string) {

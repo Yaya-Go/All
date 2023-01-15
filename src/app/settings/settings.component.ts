@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { AddQuickComponent } from '../shared/add-quick/add-quick.component';
+import { RemoveQuickComponent } from '../shared/remove-quick/remove-quick.component';
 
 @Component({
   selector: 'app-settings',
@@ -15,7 +18,8 @@ export class SettingsComponent {
   displayName: string;
 
   constructor(
-    private auth: AuthService
+    private auth: AuthService,
+    private modal: NgbModal
   ) {
     this.auth.userName.subscribe(name => this.displayName = name);
   }
@@ -36,5 +40,17 @@ export class SettingsComponent {
         }
       });
     }
+  }
+
+  setQuick() {
+    this.modal.open(AddQuickComponent, {
+      centered: true
+    });
+  }
+
+  removeQuick() {
+    this.modal.open(RemoveQuickComponent, {
+      centered: true
+    });
   }
 }

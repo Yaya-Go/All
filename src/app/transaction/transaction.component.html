@@ -47,34 +47,46 @@
         <app-base>
           <ng-container>
             <div class="table-content">
-              <form>
-                <app-custom-table
-                  [headers]="headers"
-                  (add)="add()"
-                >
-                  <ng-container>
-                    <tbody *ngIf="(list$ | async)">
-                      <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
-                        <td class="align-middle d-none d-md-table-cell">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
-                        <td class="align-middle">{{item.name}}</td>
-                        <td class="align-middle text-info d-none d-md-table-cell">
-                          <a class="btn btn-link non-decoration text-info px-0" [routerLink]="['/category/'+item.category.id]">{{item.category.name}}</a>
-                        </td>
-                        <td class="align-middle text-danger">{{item.amount | currency:'$'}}</td>
-                        <td class="align-middle text-end">
-                          <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
-                            <i class="fa-regular fa-file-lines"></i>
-                          </button>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </ng-container>
-                </app-custom-table>
-                <div class="d-flex justify-content-between p-2" *ngIf="(list$ | async)?.length">
-                  <ngb-pagination class="mx-auto" [collectionSize]="(list$ | async)?.length!" [(page)]="currentPage" [pageSize]="pagePerShow">
-                  </ngb-pagination>
-                </div>
-              </form>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col" *ngFor="let h of headers" [ngClass]="h.className">{{ h.name }}</th>
+                    <th scope="col" class="text-end">
+                      <div class="nav-item dropdown">
+                        <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+                          <i class="fa-solid fa-plus"></i>
+                        </button>
+                        <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="javascript:void(0)" (click)="add()">New Transaction</a></li>
+                          <li><hr class="dropdown-divider"></li>
+                          <li *ngFor="let item of (quickList$ | async)">
+                            <a class="dropdown-item" href="javascript:void(0)" (click)="addQuick(item)">{{item.name}} - {{item.category.name}}</a>
+                          </li>
+                        </ul>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody *ngIf="(list$ | async)">
+                  <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
+                    <td class="align-middle d-none d-md-table-cell">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
+                    <td class="align-middle">{{item.name}}</td>
+                    <td class="align-middle text-info d-none d-md-table-cell">
+                      <a class="btn btn-link non-decoration text-info px-0" [routerLink]="['/category/'+item.category.id]">{{item.category.name}}</a>
+                    </td>
+                    <td class="align-middle text-danger">{{item.amount | currency:'$'}}</td>
+                    <td class="align-middle text-end">
+                      <button class="btn btn-sm btn-outline-primary non-outline" type="button" (click)="detail(item.id)">
+                        <i class="fa-regular fa-file-lines"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <div class="d-flex justify-content-between p-2" *ngIf="(list$ | async)?.length">
+                <ngb-pagination class="mx-auto" [collectionSize]="(list$ | async)?.length!" [(page)]="currentPage" [pageSize]="pagePerShow">
+                </ngb-pagination>
+              </div>
             </div>
           </ng-container>
         </app-base>

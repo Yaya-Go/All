@@ -1,0 +1,23 @@
+<div class="remove-quick p-3">
+  <div class="contianer-fluid">
+    <div class="card">
+      <div class="card-header">List of Quick Transaction</div>
+      <div class="card-body">
+        <ol *ngIf="(quickList$ | async)?.length">
+          <li *ngFor="let item of (quickList$ | async)">
+            <p class="d-flex">
+              <span>{{item.name}}</span>
+              <span class="ms-auto">{{item.category.name}}</span>
+              <span class="ms-auto">
+                <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="remove(item)">
+                  <i class="fa-solid fa-trash"></i>
+                </button>
+              </span>
+            </p>
+          </li>
+        </ol>
+        <p *ngIf="!(quickList$ | async)?.length">You don't have any Quick Transaction</p>
+      </div>
+    </div>
+  </div>
+</div>

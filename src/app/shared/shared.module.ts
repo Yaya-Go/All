@@ -11,6 +11,8 @@ import { DetailComponent } from './detail/detail.component';
 import { RouterModule } from '@angular/router';
 import { AddIncomeComponent } from './add-income/add-income.component';
 import { NgChartsModule } from 'ng2-charts';
+import { AddQuickComponent } from './add-quick/add-quick.component';
+import { RemoveQuickComponent } from './remove-quick/remove-quick.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { NgChartsModule } from 'ng2-charts';
     AddTransactionComponent,
     AddTransactionItemComponent,
     DetailComponent,
-    AddIncomeComponent
+    AddIncomeComponent,
+    AddQuickComponent,
+    RemoveQuickComponent
   ],
   imports: [
     CommonModule,

@@ -8,6 +8,8 @@ import { AddTransactionComponent } from '../shared/add-transaction/add-transacti
 import { Router } from '@angular/router';
 import { TRANSACTION_HEADERS } from '../core/models/table-headers.model';
 import { ChartOptions } from 'chart.js';
+import { Observable } from 'rxjs';
+import { QuickService } from '../core/services/quick.service';
 
 @Component({
   selector: 'app-transaction',
@@ -27,12 +29,11 @@ export class TransactionComponent extends BaseComponent implements OnInit {
         callbacks: {
           label: function(context) {
             let label = context.label || '';
-
             if (label) {
-                label += ': ';
+              label += ': ';
             }
             if (context.formattedValue !== null) {
-                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(context.formattedValue));
+              label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(context.raw));
             }
             return label;
           }
@@ -45,10 +46,13 @@ export class TransactionComponent extends BaseComponent implements OnInit {
   public pieChartLegend = false;
   public pieChartPlugins = [];
 
+  quickList$: Observable<any[]>;
+
   constructor(
     private transService: TransactionService,
     private modal: NgbModal,
-    private router: Router
+    private router: Router,
+    private quickService: QuickService
   ) {
     super();
     this.title = 'Transactions';
@@ -57,6 +61,7 @@ export class TransactionComponent extends BaseComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetchTransactions();
+    this.quickList$ = this.quickService.getAll();
   }
 
   fetchTransactions() {
@@ -86,8 +91,13 @@ export class TransactionComponent extends BaseComponent implements OnInit {
   }
 
   add() {
-    this.modal.open(AddTransactionComponent, {
+    const modalRef = this.modal.open(AddTransactionComponent, {
       centered: true
+    });
+    modalRef.closed.subscribe(() => this.summary = {
+      length: 0,
+      amount: 0,
+      category: {}
     });
   }
 
@@ -98,13 +108,12 @@ export class TransactionComponent extends BaseComponent implements OnInit {
   }
 
   override calcSummary(): void {
-    this.summary = {
-      length: 0,
-      amount: 0,
-      category: {}
-    };
-
     this.list$.subscribe(list => {
+      this.summary = {
+        length: 0,
+        amount: 0,
+        category: {}
+      };
       this.summary.length = list.length;
       list.forEach(l => {
         this.summary.amount += l.amount;
@@ -119,5 +128,27 @@ export class TransactionComponent extends BaseComponent implements OnInit {
         data: Object.values(this.summary.category)
       } ];
     });
+  }
+
+  addQuick(item: any) {
+    console.log(item)
+    const value = window.prompt('Please input the value (Numbers only)');
+    if (value && value.trim() && !isNaN(Number(value))) {
+      const data = {
+        date: { year: new Date().getFullYear(), month: new Date().getMonth()+1, day: new Date().getDate()},
+        name: item.name,
+        categoryId: item.category.id,
+        category: item.category,
+        amount: Number(value),
+        rates: 0,
+        address: '',
+        comments: ''
+      };
+      this.transService.create(data).then(() => {
+        window.alert('Create successfully.');
+      })
+    } else {
+      window.alert('Invaild value, please try again.');
+    }
   }
 }
