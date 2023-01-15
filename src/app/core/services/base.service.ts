@@ -15,7 +15,8 @@ export enum DocumentName {
   TRANSACTION = 'transactions',
   TRANSACTION_ITEM = 'transaction-items',
   INCOME = 'income',
-  QUICK = 'quick'
+  QUICK = 'quick',
+  MORTGAGE = 'mortgage'
 }
 
 @Injectable({

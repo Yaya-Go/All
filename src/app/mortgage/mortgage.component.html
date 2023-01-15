@@ -1,38 +1,33 @@
-<div class="income">
+<div class="mortgage">
   <div class="container">
-    <div class="income__content d-flex flex-column">
+    <div class="mortgage__content d-flex flex-column">
       <h1 class="text-center d-flex mb-0">
         <a class="btn btn-sm btn-link non-decoration my-auto" href="javascript:void(0);" (click)="prvYear()">
           <i class="fa-solid fa-arrow-left"></i>
         </a>
-        <span class="mx-auto">{{ currentYear }} Income</span>
+        <span class="mx-auto">{{ currentYear }} Mortgage</span>
         <a class="btn btn-sm btn-link non-decoration my-auto" href="javascript:void(0);" (click)="nextYear()">
           <i class="fa-solid fa-arrow-right"></i>
         </a>
       </h1>
-      <div class="income-summary">
+      <div class="mortgage-summary">
         <div class="summary-card card col-lg-6 col-sm-12 mx-auto my-4">
           <div class="card-body">
             <p class="d-flex mb-0">
-              <span>Total Paystub</span>
-              <span class="text-primary ms-auto">{{summary.length}}</span>
+              <span>Total</span>
+              <span class="text-danger ms-auto">{{total | currency:'$'}}</span>
             </p>
-            <p class="d-flex mb-0">
-              <span>Total Amount</span>
-              <span class="text-success ms-auto">{{summary.amount | currency:'$'}}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Personal Amount</span>
-              <span class="text-success ms-auto">{{summary.personal | currency:'$'}}</span>
-            </p>
-            <p class="d-flex mb-0">
-              <span>Business Amount</span>
-              <span class="text-success ms-auto">{{summary.business | currency:'$'}}</span>
-            </p>
+            <hr>
+            <div >
+              <p class="d-flex mb-0" *ngFor="let name of mortgageList">
+                <span>{{name | titlecase}}</span>
+                <span class="text-danger ms-auto">{{summary[name] | currency:'$'}}</span>
+              </p>
+            </div>
           </div>
         </div>
       </div>
-      <div class="income-list">
+      <div class="mortgage-list">
         <app-custom-table
           [headers]="headers"
           (add)="add()"
@@ -41,14 +36,10 @@
             <tbody *ngIf="(list$ | async)">
               <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
                 <td class="align-middle d-none d-md-table-cell">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
-                <td class="align-middle">{{item.from}}</td>
-                <td class="align-middle d-none d-md-table-cell">{{item.type}}</td>
-                <td class="align-middle text-success">{{item.amount | currency:'$'}}</td>
+                <td class="align-middle">{{item.name | titlecase}}</td>
+                <td class="align-middle text-danger">{{item.amount | currency:'$'}}</td>
                 <td class="text-end col-3">
-                  <button class="btn btn-sm btn-outline-warning non-outline" type="button" (click)="edit(item)">
-                    <i class="fa-solid fa-pen"></i>
-                  </button>
-                  <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="delete(item.id)">
+                  <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="delete(item)">
                     <i class="fa-solid fa-trash"></i>
                   </button>
                 </td>

@@ -1,7 +1,7 @@
-<div class="add-income p-3">
-  <h2 class="text-center mb-4">Add new income</h2>
+<div class="add-mortgage p-3">
+  <h2 class="text-center mb-4">Add new mortgage</h2>
   <div class="form-content">
-    <form [formGroup]="incomeForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="mortgageForm" (ngSubmit)="onSubmit()">
       <div class="input-group mb-3">
         <input
           class="form-control"
@@ -20,24 +20,12 @@
         </div>
       </div>
       <div class="form-floating mb-3">
-        <input type="text" class="form-control" id="floatingFrom" placeholder="From" formControlName="from"
-          [ngClass]="{ 'is-invalid': submitted && controls['from'].errors }"
+        <input type="text" class="form-control" id="floatingName" placeholder="Name" formControlName="name"
+          [ngClass]="{ 'is-invalid': submitted && controls['name'].errors }"
         >
-        <label for="floatingFrom">From</label>
-        <div *ngIf="submitted && controls['from'].errors" class="invalid-feedback">
-          <div *ngIf="controls['from'].errors['required']">From is required</div>
-        </div>
-      </div>
-      <div class="mb-3">
-        <select class="form-select" aria-label="Select Type" formControlName="type"
-          [ngClass]="{ 'is-invalid': submitted && controls['type'].errors }"
-        >
-          <option value="">Select Type</option>
-          <option value="Personal">Personal</option>
-          <option value="Business">Business</option>
-        </select>
-        <div *ngIf="submitted && controls['type'].errors" class="invalid-feedback">
-          <div *ngIf="controls['type'].errors['required']">Type is required</div>
+        <label for="floatingName">Name</label>
+        <div *ngIf="submitted && controls['name'].errors" class="invalid-feedback">
+          <div *ngIf="controls['name'].errors['required']">Name is required</div>
         </div>
       </div>
       <div class="form-floating mb-3">

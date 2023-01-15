@@ -24,3 +24,9 @@ export const INCOME_HEADERS: TableHeaders[] = [
   { name: 'Type', className: 'd-none d-md-table-cell' },
   { name: 'Amount' }
 ];
+
+export const MORTGAGE_HEADERS: TableHeaders[] = [
+  { name: 'Date', className: 'd-none d-md-table-cell' },
+  { name: 'Name' },
+  { name: 'Amount' }
+];

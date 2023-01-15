@@ -57,7 +57,7 @@ export class StatisticComponent {
     plugins: {
       title: {
         display: true,
-        text: `${this.selectedYear} Summary`
+        text: `${this.selectedYear} Transaction Summary`
       },
       tooltip: {
         callbacks: {

@@ -7,6 +7,7 @@ import { AuthGuard } from './core/guard/auth.guard';
 // import { GiftGameComponent } from './gift-game/gift-game.component';
 import { HomeComponent } from './home/home.component';
 import { IncomeComponent } from './income/income.component';
+import { MortgageComponent } from './mortgage/mortgage.component';
 
 const routes: Routes = [
   {
@@ -48,6 +49,10 @@ const routes: Routes = [
   {
     canActivate: [AuthGuard],
     path: 'income', component: IncomeComponent
+  },
+  {
+    canActivate: [AuthGuard],
+    path: 'mortgage', component: MortgageComponent
   },
   {
     path: '**',
