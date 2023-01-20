@@ -13,9 +13,9 @@ export const TRANSACTION_HEADERS: TableHeaders[] = [
 
 export const TRANSACTION_ITEM_HEADERS: TableHeaders[] = [
   { name: 'Name' },
-  { name: 'Rates' },
+  { name: 'Rates', className: 'd-none d-md-table-cell' },
   { name: 'Amount' },
-  { name: 'Comments' }
+  { name: 'Comments', className: 'd-none d-md-table-cell' }
 ];
 
 export const INCOME_HEADERS: TableHeaders[] = [

@@ -102,7 +102,7 @@
                       <tbody *ngIf="(itmeList$ | async)">
                         <tr *ngFor="let item of (itmeList$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
                           <td class="align-middle">{{item.name}}</td>
-                          <td class="align-middle">
+                          <td class="align-middle d-none d-md-table-cell">
                             <ol class="d-flex">
                               <li *ngFor="let i of [0,1,2,3,4]">
                                 <i class="fa-regular fa-star" *ngIf="item.rates - i <= 0"></i>
@@ -112,7 +112,7 @@
                             </ol>
                           </td>
                           <td class="align-middle">{{item.amount | currency:'$'}}</td>
-                          <td class="align-middle">{{item.comments}}</td>
+                          <td class="align-middle d-none d-md-table-cell">{{item.comments}}</td>
                           <td class="text-end col-3">
                             <button class="btn btn-sm btn-outline-warning non-outline" type="button" (click)="editItem(item)">
                               <i class="fa-solid fa-pen"></i>

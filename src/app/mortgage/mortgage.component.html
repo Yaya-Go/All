@@ -38,7 +38,7 @@
                 <td class="align-middle d-none d-md-table-cell">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
                 <td class="align-middle">{{item.name | titlecase}}</td>
                 <td class="align-middle text-danger">{{item.amount | currency:'$'}}</td>
-                <td class="text-end col-3">
+                <td class="align-middle text-end col-3">
                   <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="delete(item)">
                     <i class="fa-solid fa-trash"></i>
                   </button>

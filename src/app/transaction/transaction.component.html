@@ -70,7 +70,10 @@
                 <tbody *ngIf="(list$ | async)">
                   <tr *ngFor="let item of (list$ | async) | slice:startIndex:(startIndex+pagePerShow); let i = index">
                     <td class="align-middle d-none d-md-table-cell">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</td>
-                    <td class="align-middle">{{item.name}}</td>
+                    <td class="align-middle">
+                      <p class="mb-0 d-md-none d-sm-block">{{item.date.year + '-' + item.date.month + '-' + item.date.day}}</p>
+                      {{item.name}}
+                    </td>
                     <td class="align-middle text-info d-none d-md-table-cell">
                       <a class="btn btn-link non-decoration text-info px-0" [routerLink]="['/category/'+item.category.id]">{{item.category.name}}</a>
                     </td>
