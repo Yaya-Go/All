@@ -16,6 +16,7 @@ export enum DocumentName {
   TRANSACTION_ITEM = 'transaction-items',
   INCOME = 'income',
   QUICK = 'quick',
+  QUICK_MORTGAGE = 'quick-mortgage',
   MORTGAGE = 'mortgage'
 }
 

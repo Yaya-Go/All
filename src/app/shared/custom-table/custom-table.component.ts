@@ -12,10 +12,17 @@ export interface TableHeaders {
 })
 export class CustomTableComponent {
 
+  @Input() list: any[];
+  @Input() enableDropdown: boolean = false;
   @Input() headers: Array<TableHeaders>;
   @Output() add = new EventEmitter();
+  @Output() addQuick = new EventEmitter();
 
   addItem() {
     this.add.emit();
+  }
+
+  addQuickItem(item: any) {
+    this.addQuick.emit(item);
   }
 }

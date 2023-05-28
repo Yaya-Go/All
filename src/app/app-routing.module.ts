@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './auth/login/login.component';
-import { RegisterComponent } from './auth/register/register.component';
-import { VerifyEmailComponent } from './auth/verify-email/verify-email.component';
 import { AuthGuard } from './core/guard/auth.guard';
 // import { GiftGameComponent } from './gift-game/gift-game.component';
 import { HomeComponent } from './home/home.component';

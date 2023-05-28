@@ -1,0 +1,30 @@
+<div class="add-mortgage p-3">
+    <h2 class="text-center mb-4">Add Quick mortgage</h2>
+    <div class="form-content">
+      <form [formGroup]="mortgageForm" (ngSubmit)="onSubmit()">
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="floatingName" placeholder="Name" formControlName="name"
+            [ngClass]="{ 'is-invalid': submitted && controls['name'].errors }"
+          >
+          <label for="floatingName">Name</label>
+          <div *ngIf="submitted && controls['name'].errors" class="invalid-feedback">
+            <div *ngIf="controls['name'].errors['required']">Name is required</div>
+          </div>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="number" min="0" class="form-control" formControlName="amount" id="floatingAmount" placeholder="Amount"
+            [ngClass]="{ 'is-invalid': submitted && controls['amount'].errors }"
+          >
+          <label for="floatingAmount">Amount</label>
+          <div *ngIf="submitted && controls['amount'].errors" class="invalid-feedback">
+            <div *ngIf="controls['amount'].errors['required']">Amount is required</div>
+          </div>
+        </div>
+  
+        <div class="text-center">
+          <button class="btn btn-primary" type="submit">Sumbit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

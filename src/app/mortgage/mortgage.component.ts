@@ -7,6 +7,7 @@ import { MORTGAGE_HEADERS } from '../core/models/table-headers.model';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddMortgageComponent } from '../shared/add-mortgage/add-mortgage.component';
 import { SharedModule } from '../shared/shared.module';
+import { QuickMortgageService } from '../core/services/quick-mortgage.service';
 
 @Component({
   selector: 'app-mortgage',
@@ -20,6 +21,7 @@ export class MortgageComponent implements OnInit {
   currentYear: number = new Date().getFullYear();
   headers: Array<TableHeaders>;
   list$: Observable<any[]>;
+  quickList$: Observable<any[]>;
   summary: any = {};
   total: number = 0;
   currentPage = 1;
@@ -32,6 +34,7 @@ export class MortgageComponent implements OnInit {
 
   constructor(
     private mortgageService: MortgageService,
+    private quickMortgageService: QuickMortgageService,
     private modal: NgbModal
   ) {
     this.headers = MORTGAGE_HEADERS;
@@ -39,6 +42,7 @@ export class MortgageComponent implements OnInit {
 
   ngOnInit(): void {
     this.fetch();
+    this.quickList$ = this.quickMortgageService.getAll();
   }
 
   prvYear() {
@@ -64,6 +68,11 @@ export class MortgageComponent implements OnInit {
       centered: true
     });
   }
+
+  addQuick(item: any) {
+    item.date = {year: new Date().getFullYear(), month: new Date().getMonth() + 1, day: new Date().getDate()};
+    this.mortgageService.create(item).then(() => window.alert('Create successfully.'));
+  }
   delete(item: any) {
     const confirm = window.confirm(`Are you sure you want to delete mortgage ${item.name}`);
     if (confirm) {
@@ -77,13 +86,13 @@ export class MortgageComponent implements OnInit {
       this.mortgageList = [];
       list.forEach(l => {
         this.total += l.amount;
-        if (!this.summary[l.name.toLowerCase()]) {
-          this.summary[l.name.toLowerCase()] = 0;
+        if (!this.summary[l.name.toLowerCase().trim()]) {
+          this.summary[l.name.toLowerCase().trim()] = 0;
         }
-        if (this.mortgageList.indexOf(l.name.toLowerCase()) === -1) {
-          this.mortgageList.push(l.name.toLowerCase());
+        if (this.mortgageList.indexOf(l.name.toLowerCase().trim()) === -1) {
+          this.mortgageList.push(l.name.toLowerCase().trim());
         }
-        this.summary[l.name.toLowerCase()] +=l.amount;
+        this.summary[l.name.toLowerCase().trim()] +=l.amount;
       });
     });
   }

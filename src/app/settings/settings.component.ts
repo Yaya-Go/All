@@ -5,6 +5,7 @@ import { AuthService } from '../core/services/auth.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { AddQuickComponent } from '../shared/add-quick/add-quick.component';
 import { RemoveQuickComponent } from '../shared/remove-quick/remove-quick.component';
+import { AddQuickMortgageComponent } from '../shared/add-quick-mortgage/add-quick-mortgage.component';
 
 @Component({
   selector: 'app-settings',
@@ -52,5 +53,19 @@ export class SettingsComponent {
     this.modal.open(RemoveQuickComponent, {
       centered: true
     });
+  }
+
+  setQuickMortgage() {
+    this.modal.open(AddQuickMortgageComponent, {
+      centered: true
+    });
+  }
+
+  removeQuickMortgage() {
+    const modal = this.modal.open(RemoveQuickComponent, {
+      centered: true
+    });
+
+    modal.componentInstance.type = 'mortgage';
   }
 }

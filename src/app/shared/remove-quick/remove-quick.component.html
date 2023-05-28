@@ -7,7 +7,7 @@
           <li *ngFor="let item of (quickList$ | async)">
             <p class="d-flex">
               <span>{{item.name}}</span>
-              <span class="ms-auto">{{item.category.name}}</span>
+              <span class="ms-auto">{{item.category?.name || (item.amount | currency:'$')}}</span>
               <span class="ms-auto">
                 <button class="btn btn-sm btn-outline-danger non-outline" type="button" (click)="remove(item)">
                   <i class="fa-solid fa-trash"></i>

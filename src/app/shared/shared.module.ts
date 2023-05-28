@@ -14,6 +14,7 @@ import { NgChartsModule } from 'ng2-charts';
 import { AddQuickComponent } from './add-quick/add-quick.component';
 import { RemoveQuickComponent } from './remove-quick/remove-quick.component';
 import { AddMortgageComponent } from './add-mortgage/add-mortgage.component';
+import { AddQuickMortgageComponent } from './add-quick-mortgage/add-quick-mortgage.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AddMortgageComponent } from './add-mortgage/add-mortgage.component';
     AddIncomeComponent,
     AddQuickComponent,
     RemoveQuickComponent,
-    AddMortgageComponent
+    AddMortgageComponent,
+    AddQuickMortgageComponent
   ],
   imports: [
     CommonModule,

@@ -4,9 +4,23 @@
       <tr>
         <th scope="col" *ngFor="let h of headers" [ngClass]="h.className">{{ h.name }}</th>
         <th scope="col" class="text-end">
-          <button class="btn btn-sm btn-primary" type="button" (click)="addItem()">
+          <button class="btn btn-sm btn-primary" type="button" (click)="addItem()" *ngIf="!enableDropdown">
             <i class="fa-solid fa-plus"></i>
           </button>
+          <div class="nav-item dropdown" *ngIf="enableDropdown">
+            <button class="btn btn-sm btn-primary dropdown-toggle" type="button" data-bs-toggle="dropdown">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" href="javascript:void(0)" (click)="addItem()">New Record</a></li>
+              <li><hr class="dropdown-divider"></li>
+              <li *ngFor="let item of list">
+                <a class="dropdown-item" href="javascript:void(0)" (click)="addQuickItem(item)">{{item.name}} - {{item.category?.name || (item.amount | currency:'$')}}</a>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li><a class="dropdown-item" routerLink="/settings">Settings</a></li>
+            </ul>
+          </div>
         </th>
       </tr>
     </thead>
