@@ -5,6 +5,7 @@ import { AuthGuard } from './core/guard/auth.guard';
 import { HomeComponent } from './home/home.component';
 import { IncomeComponent } from './income/income.component';
 import { MortgageComponent } from './mortgage/mortgage.component';
+import { TodoComponent } from './todo/todo.component';
 
 const routes: Routes = [
   {
@@ -50,6 +51,10 @@ const routes: Routes = [
   {
     canActivate: [AuthGuard],
     path: 'mortgage', component: MortgageComponent
+  },
+  {
+    canActivate: [AuthGuard],
+    path: 'todo', component: TodoComponent
   },
   {
     path: '**',
