@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TransactionService } from '../core/services/transaction.service';
-import { ChartConfiguration,  } from 'chart.js';
+import { ChartConfiguration, ChartOptions,  } from 'chart.js';
 import { SharedModule } from '../shared/shared.module';
 
 @Component({
@@ -30,6 +30,12 @@ export class StatisticComponent {
     'December'
   ];
 
+  summary: any = {};
+  categoryName: any[] = [];
+  categorySummary: any = {};
+  filterType: string = 'monthly';
+
+  // bar
   public barChartLegend = true;
   public barChartPlugins = [];
 
@@ -38,52 +44,17 @@ export class StatisticComponent {
     datasets: []
   };
 
-  public barChartOptions: ChartConfiguration<'bar'>['options'] = {
+  public barChartOptions: ChartConfiguration<'bar'>['options'];
+
+  // pie
+  public pieChartOptions: ChartOptions<'pie'> = {
     responsive: true,
-    scales: {
-      y: {
-        stacked: true,
-        ticks: {
-          // Include a dollar sign in the ticks
-          callback: function(value, index, ticks) {
-              return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value));
-          }
-        }
-      },
-      x: {
-        stacked: true
-      }
-    },
-    plugins: {
-      title: {
-        display: true,
-        text: `${this.selectedYear} Transaction Summary`
-      },
-      tooltip: {
-        callbacks: {
-          label: function(context) {
-            let label = context.dataset.label || '';
-
-            if (label) {
-                label += ': ';
-            }
-            if (context.parsed.y !== null) {
-                label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
-            }
-            return label;
-          }
-        }
-      }
-    },
-    interaction: {
-      intersect: false,
-    }
   };
-
-  summary: any = {};
-  categoryName: any[] = [];
-
   
+  public pieChartDatasets = [ {
+    data: []
+  } ];
+  public pieChartLegend = true;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -98,6 +69,8 @@ export class StatisticComponent {
         this.selectedYear = Number(p['year']);
       }
 
+      this.buildOptions();
+
       this.transService.getTransactionByYear(this.selectedYear)
         .subscribe(list => {
           list.forEach(l => {
@@ -108,8 +81,15 @@ export class StatisticComponent {
               this.summary[l.category.name] = new Array(12).fill(0);
             }
             this.summary[l.category.name][l.date.month-1] += l.amount;
+
+            if (!this.categorySummary[l.category.name]) {
+              this.categorySummary[l.category.name] = 0;
+            }
+            this.categorySummary[l.category.name] += l.amount;
           });
+  
           this.barChartData.datasets = this.buildDataset();
+          this.pieChartDatasets[0].data = Object.values(this.categorySummary);
         });
     });
   }
@@ -121,6 +101,50 @@ export class StatisticComponent {
       color += letters[Math.floor(Math.random() * 16)];
     }
     return color;
+  }
+
+  buildOptions() {
+    this.barChartOptions = {
+      responsive: true,
+      scales: {
+        y: {
+          stacked: true,
+          ticks: {
+            // Include a dollar sign in the ticks
+            callback: function(value, index, ticks) {
+                return new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(Number(value));
+            }
+          }
+        },
+        x: {
+          stacked: true
+        }
+      },
+      plugins: {
+        title: {
+          display: true,
+          text: `${this.selectedYear} Transaction Summary`
+        },
+        tooltip: {
+          callbacks: {
+            label: function(context) {
+              let label = context.dataset.label || '';
+  
+              if (label) {
+                  label += ': ';
+              }
+              if (context.parsed.y !== null) {
+                  label += new Intl.NumberFormat('en-US', { style: 'currency', currency: 'USD' }).format(context.parsed.y);
+              }
+              return label;
+            }
+          }
+        }
+      },
+      interaction: {
+        intersect: false,
+      }
+    };
   }
 
   buildDataset() {

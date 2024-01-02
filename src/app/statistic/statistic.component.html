@@ -1,12 +1,30 @@
 <div class="statistic ">
   <div class="container">
-    <div class="chart d-none d-md-block">
+    <div class="statistic-filter d-flex">
+      <span class="me-3 my-auto">Type: </span>
+      <select aria-label="Select Filter Type" [(ngModel)]="filterType">
+        <option [value]="'monthly'">Monthly</option>
+        <option [value]="'category'">Category</option>
+      </select>
+    </div>
+    <div class="chart d-none d-md-block" *ngIf="filterType === 'monthly'">
       <canvas baseChart
         [datasets]="barChartData.datasets"
         [labels]="months"
         [options]="barChartOptions"
         [legend]="barChartLegend"
         [type]="'bar'"></canvas>
+    </div>
+
+    <div class="chart d-none d-md-block" *ngIf="filterType === 'category'">
+      <canvas baseChart
+        [type]="'pie'"
+        [datasets]="pieChartDatasets"
+        [labels]="categoryName"
+        [options]="pieChartOptions"
+        [legend]="true">
+      </canvas>
+
     </div>
 
     <div class="d-sm-block d-md-none">

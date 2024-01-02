@@ -66,7 +66,7 @@ export class DetailComponent extends BaseComponent {
   }
 
   nextMonth() {
-    if (this.currentMonth === new Date().getMonth()+1) {
+    if (this.currentMonth === new Date().getMonth()+1 && this.currentYear === new Date().getFullYear()) {
       return;
     }
     this.currentMonth++;
